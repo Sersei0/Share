@@ -12,7 +12,6 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Nom</th>
                                 <th scope="col">Catégorie</th>
                                 <th scope="col">Actions</th>
                             </tr>
@@ -20,9 +19,12 @@
                         <tbody>
                             {%for categorie in categories | sort((a, b) => a.Categorie <=> b.Categorie) %}
                                 <tr class="{{cycle(['table-primary', 'table-secondary'], loop.index0)}}">
-                                    <td>{{categorie.nom | capitalize}}</td>
                                     <td>{{categorie.Categorie | capitalize}}</td>
-                                    <td><a href="{{path('app_modify_categorie', {'id' : categorie.id})}}"><i class="bi bi-pencil-square text-dark"></i></a></td>
+                                    <td>
+                                        <a href="{{path('app_modify_categorie', {'id' : categorie.id})}}"><i class="bi bi-pencil-square text-dark"></i></a>
+                                        <a href="{{path('app_removeCategorie', {'id' : categorie.id})}}"><i class="bi bi-trash3 text-dark"></i></a>
+                                    </td>
+                                    
                                 </tr>
                             {%endfor %}
                         </tbody> 

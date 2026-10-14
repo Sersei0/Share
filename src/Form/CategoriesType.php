@@ -14,7 +14,6 @@ class CategoriesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Nom', TextType::class, ['attr'=> ['class' => 'form-control'], 'label_attr' => ['class' => 'form-label mt-4']])
             ->add('Categorie', TextType::class, ['attr'=> ['class' => 'form-control'], 'label_attr' => ['class' => 'form-label mt-4']])
             ->add('Envoyer', SubmitType::class, ['attr' => ['class' => 'btn btn-primary m-4'], 'row_attr' => ['class' => 'text-center']])
         ;

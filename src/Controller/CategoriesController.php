@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Categories;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CategoriesRepository;
+use App\Form\ModifyCategorieType;
 
 final class CategoriesController extends AbstractController
 {
@@ -26,7 +27,7 @@ final class CategoriesController extends AbstractController
                 $em -> persist($categorie);
                 $em -> flush();
                 $this -> addFlash('notice', 'Nouvelle catégorie enregistrée');
-                return $this->redirectToRoute('app_depot_categories');
+                return $this->redirectToRoute('app_depot_liste_categories');
             }
         }
 
@@ -41,9 +42,36 @@ final class CategoriesController extends AbstractController
     }
 
     #[Route('/modify_categorie/{id}', name: 'app_modify_categorie')]
-    public function modifyCategorie(Categories $categorie) : Response
+    public function modifyCategorie(Categories $categorie, Request $request, EntityManagerInterface $em) : Response
     {
-        dd($categorie);
-        return $this->render('categories/modifyCategorie.html.twig', []);
+        $form = $this->createForm(ModifyCategorieType::class, $categorie);
+
+        if($request->isMethod('POST'))
+        {
+            $form->handleRequest($request); #hydrate l'objet request
+
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                $em-> persist($categorie);
+                $em-> flush();
+
+                $this->addFlash('notice', 'Catégorie modifiée');
+
+                return $this->redirectToRoute('app_depot_liste_categories');
+            }
+        }
+
+        return $this->render('categories/modifyCategorie.html.twig', ['modifForm' => $form->createView(),]);
+    }
+
+    #[Route('/remCategorie/{id}', name: 'app_removeCategorie')]
+    public function removeCategorie(Categories $categorie, EntityManagerInterface $em) : Response
+    {
+        if ($categorie != null){
+            $em->remove($categorie);
+            $em->flush();
+            $this->addFlash('notice','Catégorie supprimée');
+        }
+        return $this->redirectToRoute('app_depot_liste_categories');
     }
 }
