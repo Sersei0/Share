@@ -5,6 +5,12 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Form\ContactType;
+use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Contact;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Form\ImportType;
+use App\Entity\Import;
 
 final class BaseController extends AbstractController
 {
@@ -27,8 +33,44 @@ final class BaseController extends AbstractController
     }
 
     #[Route('/contact', name: 'app_contact')]
-    public function contact(): Response
+    public function contact(Request $request, EntityManagerInterface $em): Response
     {
-        return $this->render('base/contact.html.twig', []);
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class, $contact);
+
+        if ($request -> isMethod('POST')) {
+            $form -> handleRequest($request);
+            if ($form -> isSubmitted() && $form -> isValid()){
+                $contact->setDateEnvoie(new \DateTimeImmutable());
+                $em -> persist($contact);
+                $em -> flush();
+                $this -> addFlash('notice', 'Message envoyé');
+                return $this -> redirectToRoute('app_contact');
+            }
+        }
+        return $this->render('base/contact.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/importation', name: 'app_import')]
+    public function importation(Request $request, EntityManagerInterface $em): Response
+    {
+        $import = new Import();
+        $form = $this->createForm(ImportType::class, $import);
+
+        if ($request -> isMethod('POST'))
+        {
+            $form-> handleRequest($request);
+            if ($form -> isSubmitted() && $form -> isValid())
+            {
+                $em -> persist($import);
+                $em -> flush();
+                $this -> addFlash('notice', 'Fichier déposé');
+                return $this->redirectToRoute('app_import');
+            }
+        }
+
+        return $this->render('base/importation.html.twig', ['ImportForm'=>$form->createView()]);
     }
 }
