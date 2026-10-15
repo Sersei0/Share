@@ -9,6 +9,7 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 bg-white p-4 m-0 text-primary">
                 <div class="table-responsive">
+                    {{form_start(form_supprMultiple)}}
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -24,11 +25,16 @@
                                         <a href="{{path('app_modify_categorie', {'id' : categorie.id})}}"><i class="bi bi-pencil-square text-dark"></i></a>
                                         <a href="{{path('app_removeCategorie', {'id' : categorie.id})}}"><i class="bi bi-trash3 text-dark"></i></a>
                                     </td>
+                                    <td>
+                                        {{form_widget(form_supprMultiple.categories[categorie.id]) }}
+                                    </td>
                                     
                                 </tr>
                             {%endfor %}
                         </tbody> 
                     </table>
+                    {{form_widget(form_supprMultiple.Supprimer)}}
+                    {{form_end(form_supprMultiple)}}
                 </div>
             </div>
         </div>

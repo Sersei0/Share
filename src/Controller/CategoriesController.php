@@ -5,12 +5,13 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Form\CategoriesType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Categories;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CategoriesRepository;
+use App\Form\CategoriesType;
 use App\Form\ModifyCategorieType;
+use App\Form\SupprCategorieType;
 
 final class CategoriesController extends AbstractController
 {
@@ -35,10 +36,26 @@ final class CategoriesController extends AbstractController
     }
 
     #[Route('/depot_liste_categories', name: 'app_depot_liste_categories')]
-    public function depotListeCategories(CategoriesRepository $categoriesRepository) : Response
+    public function depotListeCategories(CategoriesRepository $categoriesRepository, Request $request, EntityManagerInterface $em) : Response
     {
         $categorie = $categoriesRepository->findAll();
-        return $this->render('categories/depot_liste_categories.html.twig', ['categories' => $categorie]);
+
+        $form = $this->createForm(SupprCategorieType::class, null, ['categories'=>$categorie]);
+        if ($request->isMethod('POST')){
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()){
+                $selectedCategories = $form->get('categories')->getData(); /*dans mon formulaire, tout ce qui est selectionné, je récupère les données de catégories*/
+                foreach($selectedCategories as $categorie){
+                    $em->remove($categorie);
+                }
+                $em->flush();
+                $this->addFlash('notice','Catégories supprimées avec succès');
+
+                return $this->redirectToRoute('app_depot_liste_categories');
+            }
+        }
+        
+        return $this->render('categories/depot_liste_categories.html.twig', ['categories' => $categorie, 'form_supprMultiple'=>$form->createView(),]);
     }
 
     #[Route('/modify_categorie/{id}', name: 'app_modify_categorie')]
