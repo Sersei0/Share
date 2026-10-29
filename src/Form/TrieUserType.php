@@ -14,7 +14,7 @@ class TrieUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Trier', SubmitType::class, ['label'=>"Trier par Date d'inscription (Z-A)", 'attr' => ['class' => 'btn btn-primary m-4'], 'row_attr' => ['class' => 'text-center']])
+            ->add('Trier', SubmitType::class, ['label'=>"Trier par Date d'inscription (Z - A)", 'attr' => ['class' => 'btn btn-primary m-4'], 'row_attr' => ['class' => 'text-center']])
         ;
     }
 
