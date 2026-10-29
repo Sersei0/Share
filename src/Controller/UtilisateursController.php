@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\TrieUserType;
+use App\Form\RegistrationFormType;
 
 final class UtilisateursController extends AbstractController
 {
@@ -34,5 +35,11 @@ final class UtilisateursController extends AbstractController
         return $this->render('utilisateurs/usersListe.html.twig', [
             'controller_name' => 'UtilisateursController', 'listeUser' => $listeUsers, 'trieUser' => $form->createView(),
         ]);
+    }
+
+    #[Route('/compte', name: 'app_compte')]
+    public function compte(UserRepository $userRepository, Request $request, EntityManagerInterface $em): Response
+    {
+        return $this->render('utilisateurs/compte.html.twig', []);
     }
 }
