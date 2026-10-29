@@ -9,26 +9,32 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 bg-white p-4 m-0 text-primary">
                 <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nom</th>
-                                <th scope="col">Sujet</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {%for contact in contacts | sort((a, b) => b.dateEnvoie <=> a.dateEnvoie) %}
-                                <tr class="{{cycle(['table-primary', 'table-secondary'], loop.index0)}}">
-                                    <td>{{contact.nom | capitalize}}</td>
-                                    <td>{{contact.sujet | capitalize}}</td>
-                                    <td>{{contact.email | lower}}</td>
-                                    <td>{{contact.dateEnvoie | date("d-m-Y à H:i:s") }}</td>
+                    {{form_start(formSuprContacts)}}
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col">Sujet</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Action</th>
                                 </tr>
-                            {%endfor %}
-                        </tbody> 
-                    </table>
+                            </thead>
+                            <tbody>
+                                {%for contact in contacts | sort((a, b) => b.dateEnvoie <=> a.dateEnvoie) %}
+                                    <tr class="{{cycle(['table-primary', 'table-secondary'], loop.index0)}}">
+                                        <td>{{contact.nom | capitalize}}</td>
+                                        <td>{{contact.sujet | capitalize}}</td>
+                                        <td>{{contact.email | lower}}</td>
+                                        <td>{{contact.dateEnvoie | date("d-m-Y à H:i:s") }}</td>
+                                        <td><a href="{{path('app_removeContact', {'id' : contact.id})}}"><i class="bi bi-trash3 text-dark"></i></a></td>
+                                        <td>{{form_widget(formSuprContacts.contacts[contact.id])}}</td>
+                                    </tr>
+                                {%endfor %}
+                            </tbody> 
+                        </table>
+                        {{form_widget(formSuprContacts.Supprimer)}}
+                    {{form_end(formSuprContacts)}}
                 </div>
             </div>
         </div>

@@ -1,7 +1,25 @@
-{%extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{%block title %}{{parent()}}A propos{%endblock %}
+{% block title %}{{parent()}} À propos{% endblock %}
 
-{%block body %}
-    <h1 class="text-center text-primary mt-4 pt-4 display-1 fw-bold">A propos</h1>
-{%endblock %}
+{% block body %}
+<div class="container mt-5 mb-5">
+
+    <!-- Bannière Projet Étudiant -->
+    <div class="alert alert-info border-0 shadow-sm mb-4" role="alert">
+        <h4 class="alert-heading fs-5 mb-2">🎓 Projet pédagogique (BTS SIO SLAM)</h4>
+        <p class="mb-0">Cette plateforme a été développée dans le cadre de ma formation. Il s'agit d'une application à but éducatif destinée à mettre en pratique le développement web avec le framework Symfony et la gestion de bases de données.</p>
+    </div>
+
+    <!-- En-tête de la page -->
+    <div class="p-5 mb-5 bg-light rounded-3 shadow-sm border">
+        <div class="container-fluid py-2">
+            <h1 class="display-5 fw-bold text-primary mb-3">Simplifiez vos partages avec Share</h1>
+            <p class="col-md-10 fs-5 text-muted mb-4">
+                Share est une plateforme pensée pour déposer et organiser vos fichiers. Développé comme exercice pratique, ce projet intègre un système complet de gestion de contenus et de contacts.
+            </p>
+            <a href="{{ path('app_import') }}" class="btn btn-primary btn-lg shadow-sm">Déposer un fichier</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

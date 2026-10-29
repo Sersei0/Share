@@ -35,7 +35,7 @@ final class CategoriesController extends AbstractController
         return $this->render('categories/depot_categories.html.twig', ['CategoriesForm' => $form -> createView()]);
     }
 
-    #[Route('/depot_liste_categories', name: 'app_depot_liste_categories')]
+    #[Route('/private-depot_liste_categories', name: 'app_depot_liste_categories')]
     public function depotListeCategories(CategoriesRepository $categoriesRepository, Request $request, EntityManagerInterface $em) : Response
     {
         $categorie = $categoriesRepository->findAll();
@@ -58,7 +58,7 @@ final class CategoriesController extends AbstractController
         return $this->render('categories/depot_liste_categories.html.twig', ['categories' => $categorie, 'form_supprMultiple'=>$form->createView(),]);
     }
 
-    #[Route('/modify_categorie/{id}', name: 'app_modify_categorie')]
+    #[Route('/private-modify_categorie/{id}', name: 'app_modify_categorie')]
     public function modifyCategorie(Categories $categorie, Request $request, EntityManagerInterface $em) : Response
     {
         $form = $this->createForm(ModifyCategorieType::class, $categorie);
@@ -81,7 +81,7 @@ final class CategoriesController extends AbstractController
         return $this->render('categories/modifyCategorie.html.twig', ['modifForm' => $form->createView(),]);
     }
 
-    #[Route('/remCategorie/{id}', name: 'app_removeCategorie')]
+    #[Route('/private-remCategorie/{id}', name: 'app_removeCategorie')]
     public function removeCategorie(Categories $categorie, EntityManagerInterface $em) : Response
     {
         if ($categorie != null){

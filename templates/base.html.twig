@@ -39,24 +39,47 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{path('app_import')}}">Dépôt</a>
                         </li>
+                        {%if is_granted('IS_AUTHENTICATED_FULLY') %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Gestion
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="nav-link" href="{{path('app_liste_contacts')}}">Liste des contacts</a></li>
                                 <li><a class="nav-link" href="{{path('app_depot_categories')}}">Ajouter une catégorie</a></li>
                                 <li><a class="nav-link" href="{{path('app_depot_liste_categories')}}">Liste des catégories</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                        {%endif %}
+                        {%if is_granted('ROLE_ADMIN')%}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Gestion des utilisateurs
+                            </a>
+                            <ul class="dropdown-menu">
+                                
+                                <li class="nav-item"><a class="nav-link" href="{{path('app_listeUtilisateurs')}}">Liste des utilisateurs</a></li>
+                            </ul>
                         </li>
+                        {%endif %}
                     </ul>
+                    
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
                         <button class="btn btn-secondary my-2" type="submit">Search</button>
                     </form>
+                    <ul class="navbar-nav me-auto">
+                        {%if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item"><a class="nav-link" href="{{path('app_login')}}">Se connecter</a> </li>
+                        <li class="nav-item"><a class="nav-link" href="{{path('app_register')}}">S'inscrire</a> </li>
+                        {%else%}
+                            {%if is_granted('ROLE_MOD')%}
+                            <li class="nav-item"><a class="nav-link" href="{{path('app_liste_contacts')}}">Liste des contacts</a></li>
+                            {%endif %}
+                        <li class="nav-item"><a class="nav-link" href="{{path('app_logout')}}">{{app.user.email }} <i class="bi bi-box-arrow-right"></i></a></li>
+                        {%endif %}
+
+                    </ul>
+                    
                 </div>
             </div>
         </nav>

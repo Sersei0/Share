@@ -1,7 +1,58 @@
-{%extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{%block title %}{{parent()}}Mentions légales{%endblock%}
+{% block title %}{{parent()}}Mentions Légales{% endblock %}
 
-{%block body %}
-    <h1 class="text-center text-primary mt-4 pt-4 display-1 fw-bold">Mentions légales</h1>
-{%endblock%}
+{% block body %}
+    <div class="container mt-5 mb-5">
+        <h1 class="mb-4 text-primary">Mentions Légales</h1>
+        <p class="text-muted mb-4">En vigueur au 22/10/2026</p>
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light fw-bold">
+                1. Éditeur du site
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li><strong>Raison sociale :</strong> Vicky Derambure</li>
+                    <li><strong>Forme juridique :</strong> Auto-entreprise</li>
+                    <li><strong>Siège social :</strong> 25 rue Isaac Holden 59170 Croix</li>
+                    <li><strong>Numéro SIRET :</strong> 00000000000001</li>
+                    <li><strong>Directeur de la publication :</strong> Vicky Derambure</li>
+                    <li><strong>Contact :</strong> <a href="mailto:[Ton email]">vicky.derambure@ynov.com</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light fw-bold">
+                2. Hébergement
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li><strong>Nom de l'hébergeur :</strong> Nuage Pédagogique</li>
+                    <li><strong>Siège social :</strong> 5 rue de la pédagogie 59170 Nuage</li>
+                    <li><strong>Contact :</strong> nuage.pédagogie@outlook.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light fw-bold">
+                3. Propriété intellectuelle
+            </div>
+            <div class="card-body">
+                <p class="mb-0">L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite, sauf autorisation écrite préalable de l'éditeur.</p>
+            </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light fw-bold">
+                4. Traitement des données personnelles (RGPD)
+            </div>
+            <div class="card-body">
+                <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification, et d'effacement de vos données personnelles.</p>
+                <p class="mb-0">Les informations recueillies via notre formulaire de contact sont enregistrées dans un fichier informatisé pour faciliter les échanges. Elles sont conservées pendant 1 an et sont destinées exclusivement à Share Enterprise. Pour exercer ce droit, contactez-nous à : <a href="mailto:[Ton email]">vicky.derambure@ynov.com</a>.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
